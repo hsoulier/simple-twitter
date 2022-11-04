@@ -16,18 +16,18 @@ import { ColorSchemeName, Pressable } from "react-native"
 
 import Colors from "../constants/Colors"
 import useColorScheme from "../hooks/useColorScheme"
-import ModalScreen from "../screens/ModalScreen"
-import NotFoundScreen from "../screens/NotFoundScreen"
-import Home from "../screens/Home"
+import ModalScreen from "../../screens/ModalScreen"
+import NotFoundScreen from "../../screens/NotFoundScreen"
+import Home from "../../screens/Home"
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
 } from "expo/AppEntry"
 import LinkingConfiguration from "./LinkingConfiguration"
-import Search from "../screens/Search"
-import Notifications from "../screens/Notifications"
-import Messages from "../screens/Messages"
+import Search from "../../screens/Search"
+import Notifications from "../../screens/Notifications"
+import Messages from "../../screens/Messages"
 
 export default function Navigation({
   colorScheme,
