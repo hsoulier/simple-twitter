@@ -12,22 +12,20 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import * as React from "react"
-import { ColorSchemeName, Pressable } from "react-native"
-
-import Colors from "../constants/Colors"
-import useColorScheme from "../hooks/useColorScheme"
+import { ColorSchemeName, Pressable, useColorScheme } from "react-native"
 import ModalScreen from "../../screens/ModalScreen"
 import NotFoundScreen from "../../screens/NotFoundScreen"
 import Home from "../../screens/Home"
+import Search from "../../screens/Search"
+import Notifications from "../../screens/Notifications"
+import Messages from "../../screens/Messages"
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
-} from "expo/AppEntry"
-import LinkingConfiguration from "./LinkingConfiguration"
-import Search from "../../screens/Search"
-import Notifications from "../../screens/Notifications"
-import Messages from "../../screens/Messages"
+} from "../../types"
+import LinkingConfiguration from "../../navigation/LinkingConfiguration"
+import Colors from "../../constants/Colors"
 
 export default function Navigation({
   colorScheme,
@@ -84,7 +82,7 @@ function BottomTabNavigator() {
       initialRouteName="Home"
       screenOptions={{
         tabBarShowLabel: false,
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarActiveTintColor: Colors[colorScheme as "light" | "dark"].tint,
       }}
     >
       <BottomTab.Screen
@@ -104,7 +102,7 @@ function BottomTabNavigator() {
               <Entypo
                 name="home"
                 size={24}
-                color={Colors[colorScheme].text}
+                color={Colors[colorScheme as "light" | "dark"].text}
                 style={{ marginRight: 15 }}
               />
             </Pressable>

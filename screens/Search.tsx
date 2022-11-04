@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native"
 
 import EditScreenInfo from "../components/EditScreenInfo"
 import { Text, View } from "../components/Themed"
-import { RootTabScreenProps } from "expo/AppEntry"
+import { RootTabScreenProps } from "../types"
 
 export default function Search({ navigation }: RootTabScreenProps<"Search">) {
   return (
