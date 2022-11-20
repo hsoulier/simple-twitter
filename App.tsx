@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar"
+import { AppRegistry } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import useCachedResources from "./hooks/useCachedResources"
 import useColorScheme from "./hooks/useColorScheme"
@@ -19,3 +20,5 @@ export default function App() {
     )
   }
 }
+
+AppRegistry.registerComponent("Twitter", () => App)

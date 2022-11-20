@@ -84,6 +84,7 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Home"
       screenOptions={{
+        headerShown: false,
         tabBarShowLabel: false,
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
@@ -116,7 +117,6 @@ function BottomTabNavigator() {
         name="Search"
         component={Search}
         options={{
-          title: "Tab Two",
           tabBarIcon: ({ color }) => (
             <Entypo name="magnifying-glass" size={24} color={color} />
           ),
@@ -135,7 +135,6 @@ function BottomTabNavigator() {
         name="Messages"
         component={Messages}
         options={{
-          title: "Tab Two",
           tabBarIcon: ({ color }) => (
             <Entypo name="mail" size={24} color={color} />
           ),
