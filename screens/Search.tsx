@@ -6,10 +6,9 @@ import {
   TextInput,
   Text,
   FlatList,
-  useWindowDimensions,
+  TouchableOpacity,
 } from "react-native"
 import { Controller, useForm } from "react-hook-form"
-import { TabView, SceneMap } from "react-native-tab-view"
 import { View } from "../components/Themed"
 import { RootTabScreenProps } from "../types"
 import avatar from "../assets/images/avatar.jpg"
@@ -19,19 +18,6 @@ import CardTweetSearch from "../components/CardTweetSearch"
 type FormValues = { searchText: string }
 export type Tweet = typeof tweets[0]
 type Results = { popular: Tweet[]; recent: Tweet[] }
-
-const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#ff4081" }} />
-)
-
-const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#673ab7" }} />
-)
-
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-})
 
 export default function Search({ navigation }: RootTabScreenProps<"Search">) {
   const { control, handleSubmit } = useForm<FormValues>({
@@ -43,13 +29,7 @@ export default function Search({ navigation }: RootTabScreenProps<"Search">) {
     recent: [],
   })
 
-  const layout = useWindowDimensions()
-
-  const [index, setIndex] = useState(0)
-  const [routes] = useState([
-    { key: "first", title: "First" },
-    { key: "second", title: "Second" },
-  ])
+  const [type, setType] = useState<"popular" | "recent">("popular")
   const searchTweets = ({ searchText }: FormValues) => {
     const listTweets = tweets.filter((tweet) =>
       tweet.Tweets.toString().includes(searchText)
@@ -89,18 +69,32 @@ export default function Search({ navigation }: RootTabScreenProps<"Search">) {
           name="searchText"
         />
       </View>
-      <TabView
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width, height: layout.height - 100 }}
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={{
+            ...styles.tabElement,
+            ...(type === "popular" && styles.tabSelected),
+          }}
+          onPress={() => setType("popular")}
+        >
+          <Text style={{ ...styles.buttonInner, color: "white" }}>Popular</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            ...styles.tabElement,
+            ...(type === "recent" && styles.tabSelected),
+          }}
+          onPress={() => setType("recent")}
+        >
+          <Text style={{ ...styles.buttonInner, color: "white" }}>Recent</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={results[type]}
+        renderItem={({ item }) => <CardTweetSearch tweet={item} />}
+        keyExtractor={(_, index) => index.toString()}
+        // extraData={selectedId}
       />
-      {/* <FlatList
-          data={results.popular}
-          renderItem={({ item }) => <CardTweetSearch tweet={item} />}
-          keyExtractor={(item) => item["Date Created"]}
-          // extraData={selectedId}
-        /> */}
     </SafeAreaView>
   )
 }
@@ -110,6 +104,28 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
+  },
+  tabContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    width: "100%",
+    borderBottomColor: "#525252",
+    borderBottomWidth: 1,
+    marginTop: 15,
+  },
+  buttonInner: {
+    textAlign: "center",
+    paddingVertical: 10,
+    color: "white",
+    fontSize: 16,
+  },
+  tabElement: {
+    // color: "white",
+    width: "50%",
+  },
+  tabSelected: {
+    borderBottomColor: "#042db5",
+    borderBottomWidth: 2,
   },
   inputContainer: {
     paddingHorizontal: 10,
