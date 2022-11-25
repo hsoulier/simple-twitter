@@ -34,7 +34,6 @@ export default function Search({ navigation }: RootTabScreenProps<"Search">) {
     const listTweets = tweets.filter((tweet) =>
       tweet.Tweets.toString().includes(searchText)
     )
-    console.log(listTweets.length)
     setResults({
       popular: listTweets.sort(
         (a, b) => b["Number of Likes"] - a["Number of Likes"]
@@ -75,7 +74,7 @@ export default function Search({ navigation }: RootTabScreenProps<"Search">) {
             ...styles.tabElement,
             ...(type === "popular" && styles.tabSelected),
           }}
-          onPress={() => setType("popular")}
+          onPress={() => setType(() => "popular")}
         >
           <Text style={{ ...styles.buttonInner, color: "white" }}>Popular</Text>
         </TouchableOpacity>
@@ -84,17 +83,19 @@ export default function Search({ navigation }: RootTabScreenProps<"Search">) {
             ...styles.tabElement,
             ...(type === "recent" && styles.tabSelected),
           }}
-          onPress={() => setType("recent")}
+          onPress={() => setType(() => "recent")}
         >
           <Text style={{ ...styles.buttonInner, color: "white" }}>Recent</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={results[type]}
-        renderItem={({ item }) => <CardTweetSearch tweet={item} />}
-        keyExtractor={(_, index) => index.toString()}
-        // extraData={selectedId}
-      />
+      <View style={{ width: "100%" }}>
+        <FlatList
+          data={type === "popular" ? results.popular : results.recent}
+          renderItem={({ item }) => <CardTweetSearch tweet={item} />}
+          keyExtractor={(_, index) => index.toString()}
+          // extraData={selectedId}
+        />
+      </View>
     </SafeAreaView>
   )
 }

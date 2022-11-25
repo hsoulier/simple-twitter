@@ -22,7 +22,7 @@ const CardTweetSearch = ({ tweet }: Props) => {
           uri: "https://pbs.twimg.com/profile_images/1590968738358079488/IY9Gx6Ok_400x400.jpg",
         }}
       />
-      <View>
+      <View style={{ flexShrink: 1 }}>
         <View
           style={{
             flexDirection: "row",
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingHorizontal: 10,
     flexDirection: "row",
-    width: "100%",
+    // flexGrow: 1,
   },
   text: {
     color: "white",
