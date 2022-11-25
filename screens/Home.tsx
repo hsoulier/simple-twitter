@@ -3,6 +3,7 @@ import { View } from "../components/Themed"
 import { RootTabScreenProps } from "../types"
 import CardTweetSearch from "../components/CardTweetSearch"
 import tweets from "../constants/tweets.json"
+import React, {useState} from 'react'
 
 export default function Home({ navigation }: RootTabScreenProps<"Home">) {
   return (

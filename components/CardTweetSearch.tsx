@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native"
-import React from "react"
+import React, { useState } from "react"
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
 import { Tweet } from "../screens/Search"
-import { Entypo } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons';
 
 
 type Props = { tweet: Tweet }
@@ -15,6 +15,7 @@ const options: Intl.DateTimeFormatOptions = {
 
 const CardTweetSearch = ({ tweet }: Props) => {
   const navigation = useNavigation()
+  const [like, setLike] = useState(false)
   return (
     <View style={styles.container}>
       <Image
@@ -47,12 +48,18 @@ const CardTweetSearch = ({ tweet }: Props) => {
             )}
           </Text>
         </View>
-          <Text style={styles.text}>{tweet.Tweets}</Text>
+        <Text style={styles.text}>{tweet.Tweets}</Text>
         <View style={styles.containerBottomTweet}>
           <Entypo name="message" size={24} color="lightgrey" />
           <Entypo name="retweet" size={24} color="lightgrey" />
           <View style={styles.containerIcons}>
-            <Entypo name="heart-outlined" size={24} color="lightgrey" />
+            <TouchableOpacity onPress={() => setLike(!like)}>
+              {!like ?
+                <Entypo name="heart-outlined" size={24} color="lightgrey" /> :
+                <Entypo name="heart-outlined" size={24} color="red" />
+              }
+
+            </TouchableOpacity>
             <Text style={{ ...styles.text, fontWeight: "400", paddingLeft: 8 }}>
               {tweet["Number of Likes"]} Likes
             </Text>
@@ -82,9 +89,9 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     display: 'flex',
     flexDirection: 'row',
-    alignItems:'flex-start',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
-    },
+  },
   containerIcons: {
     display: "flex",
     flexDirection: 'row',
