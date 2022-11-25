@@ -4,7 +4,6 @@
  *
  */
 import { Entypo } from "@expo/vector-icons"
-import { Ionicons } from '@expo/vector-icons'; 
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import {
@@ -14,14 +13,14 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import * as React from "react"
-import { ColorSchemeName, Pressable, TouchableOpacity, Platform } from "react-native"
+import { ColorSchemeName, Image } from "react-native"
 
 import Colors from "../constants/Colors"
 import useColorScheme from "../hooks/useColorScheme"
 import ModalScreen from "../screens/ModalScreen"
 import NotFoundScreen from "../screens/NotFoundScreen"
 import Home from "../screens/Home"
-
+import avatar from '../assets/images/avatar.jpg'
 import LinkingConfiguration from "./LinkingConfiguration"
 import Search from "../screens/Search"
 import Notifications from "../screens/Notifications"
@@ -67,7 +66,7 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal", headerShown: false }}>
+      <Stack.Group screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>
@@ -87,7 +86,7 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
         tabBarShowLabel: false,
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
@@ -99,21 +98,15 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => (
             <Entypo name="home" size={24} color={color} />
           ),
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <Entypo
-                name="home"
-                size={24}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
+          headerTitle: () => (
+            <Entypo name="twitter" size={32} color="blue" />
           ),
+          headerLeft: () => (
+            <Image
+            style={{marginLeft: 16 ,width: 40, height: 40, marginRight: 20, borderRadius: 50 }}
+              source={require('../assets/images/avatar.jpg')}
+          />
+          )
         })}
       />
       <BottomTab.Screen
