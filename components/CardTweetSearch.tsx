@@ -61,7 +61,7 @@ const CardTweetSearch = ({ tweet }: Props) => {
 
             </TouchableOpacity>
             <Text style={{ ...styles.text, fontWeight: "400", paddingLeft: 8 }}>
-              {tweet["Number of Likes"]} Likes
+              {like ? tweet["Number of Likes"]+ 1 : tweet["Number of Likes"] }              
             </Text>
           </View>
         </View>
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingHorizontal: 10,
     flexDirection: "row",
+    backgroundColor: 'black'
     // flexGrow: 1,
   },
   text: {
