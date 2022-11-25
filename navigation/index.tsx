@@ -4,6 +4,8 @@
  *
  */
 import { Entypo } from "@expo/vector-icons"
+import { Ionicons } from '@expo/vector-icons'; 
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import {
   NavigationContainer,
@@ -12,7 +14,7 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import * as React from "react"
-import { ColorSchemeName, Pressable, Text } from "react-native"
+import { ColorSchemeName, Pressable, TouchableOpacity, Platform } from "react-native"
 
 import Colors from "../constants/Colors"
 import useColorScheme from "../hooks/useColorScheme"
@@ -65,10 +67,7 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal", 
-      headerTitle: () => <Entypo name="twitter" size={24} color="blue" />,
-      // headerRight: () => <View></View>
-      }}>
+      <Stack.Group screenOptions={{ presentation: "modal", headerShown: false }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>

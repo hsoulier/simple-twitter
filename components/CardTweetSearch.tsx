@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native"
 import React from "react"
-import { View, Text, StyleSheet, Image } from "react-native"
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
 import { Tweet } from "../screens/Search"
 import { Entypo } from '@expo/vector-icons'; 
+
 
 type Props = { tweet: Tweet }
 
