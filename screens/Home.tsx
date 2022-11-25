@@ -1,19 +1,22 @@
-import { Button, StyleSheet } from "react-native"
+import { TouchableOpacity, StyleSheet, FlatList } from "react-native"
 import EditScreenInfo from "../components/EditScreenInfo"
 import { Text, View } from "../components/Themed"
 import { RootTabScreenProps } from "../types"
+import CardTweetSearch from "../components/CardTweetSearch"
+import tweets from "../constants/tweets.json"
+import { AntDesign } from '@expo/vector-icons'; 
 
 export default function Home({ navigation }: RootTabScreenProps<"Home">) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <Button onPress={() => navigation.push("Modal")} title="MOdal" />
-      <EditScreenInfo path="/screens/Home.tsx" />
+      <View style={{ width: "100%", backgroundColor: 'black' }}>
+        <FlatList
+          data={tweets}
+          renderItem={({ item, index }) => <TouchableOpacity onPress={() => navigation.push("Modal",{ tweetId: index })}><CardTweetSearch tweet={item}/></TouchableOpacity>}
+          keyExtractor={(_, index) => index.toString()}
+          // extraData={selectedId}
+        />
+      </View>
     </View>
   )
 }

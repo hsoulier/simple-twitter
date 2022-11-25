@@ -12,7 +12,7 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import * as React from "react"
-import { ColorSchemeName, Pressable } from "react-native"
+import { ColorSchemeName, Pressable, Text } from "react-native"
 
 import Colors from "../constants/Colors"
 import useColorScheme from "../hooks/useColorScheme"
@@ -29,6 +29,7 @@ import {
   RootTabParamList,
   RootTabScreenProps,
 } from "../types"
+import { View } from "../components/Themed"
 
 export default function Navigation({
   colorScheme,
@@ -64,7 +65,10 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
+      <Stack.Group screenOptions={{ presentation: "modal", 
+      headerTitle: () => <Entypo name="twitter" size={24} color="blue" />,
+      // headerRight: () => <View></View>
+      }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>

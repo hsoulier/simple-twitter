@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native"
 import React from "react"
 import { View, Text, StyleSheet, Image } from "react-native"
 import { Tweet } from "../screens/Search"
+import { Entypo } from '@expo/vector-icons'; 
 
 type Props = { tweet: Tweet }
 
@@ -13,7 +14,6 @@ const options: Intl.DateTimeFormatOptions = {
 
 const CardTweetSearch = ({ tweet }: Props) => {
   const navigation = useNavigation()
-
   return (
     <View style={styles.container}>
       <Image
@@ -22,7 +22,7 @@ const CardTweetSearch = ({ tweet }: Props) => {
           uri: "https://pbs.twimg.com/profile_images/1590968738358079488/IY9Gx6Ok_400x400.jpg",
         }}
       />
-      <View style={{ flexShrink: 1 }}>
+      <View style={{ flexShrink: 1, width: '100%' }}>
         <View
           style={{
             flexDirection: "row",
@@ -46,10 +46,17 @@ const CardTweetSearch = ({ tweet }: Props) => {
             )}
           </Text>
         </View>
-        <Text style={styles.text}>{tweet.Tweets}</Text>
-        <Text style={{ ...styles.text, fontWeight: "400" }}>
-          {tweet["Number of Likes"]} Likes
-        </Text>
+          <Text style={styles.text}>{tweet.Tweets}</Text>
+        <View style={styles.containerBottomTweet}>
+          <Entypo name="message" size={24} color="lightgrey" />
+          <Entypo name="retweet" size={24} color="lightgrey" />
+          <View style={styles.containerIcons}>
+            <Entypo name="heart-outlined" size={24} color="lightgrey" />
+            <Text style={{ ...styles.text, fontWeight: "400", paddingLeft: 8 }}>
+              {tweet["Number of Likes"]} Likes
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
   )
@@ -70,4 +77,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
   },
+  containerBottomTweet: {
+    paddingTop: 12,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems:'flex-start',
+    justifyContent: 'space-between',
+    },
+  containerIcons: {
+    display: "flex",
+    flexDirection: 'row',
+  }
 })
