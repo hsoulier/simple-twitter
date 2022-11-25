@@ -1,22 +1,29 @@
-import { TouchableOpacity, StyleSheet, FlatList, } from "react-native"
+import { TouchableOpacity, StyleSheet, FlatList } from "react-native"
 import { View } from "../components/Themed"
 import { RootTabScreenProps } from "../types"
 import CardTweetSearch from "../components/CardTweetSearch"
 import tweets from "../constants/tweets.json"
-import React, {useState} from 'react'
+import { AntDesign } from "@expo/vector-icons"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 export default function Home({ navigation }: RootTabScreenProps<"Home">) {
   return (
-    <View style={styles.container}>
-      <View style={{ width: "100%" }}>
+    <SafeAreaView style={styles.container}>
+      <View style={{ width: "100%", backgroundColor: "black" }}>
         <FlatList
           data={tweets}
-          renderItem={({ item, index }) => <TouchableOpacity onPress={() => navigation.push("Modal",{ tweetId: index })}><CardTweetSearch tweet={item}/></TouchableOpacity>}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity
+              onPress={() => navigation.push<any>("Modal", { tweetId: index })}
+            >
+              <CardTweetSearch tweet={item} />
+            </TouchableOpacity>
+          )}
           keyExtractor={(_, index) => index.toString()}
           // extraData={selectedId}
         />
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 

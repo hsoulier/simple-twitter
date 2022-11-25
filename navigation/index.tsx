@@ -122,6 +122,7 @@ function BottomTabNavigator() {
         name="Notifications"
         component={Notifications}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Entypo name="bell" size={24} color={color} />
           ),

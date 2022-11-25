@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Image,
   SafeAreaView,
@@ -23,7 +23,7 @@ export default function Search({ navigation }: RootTabScreenProps<"Search">) {
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: { searchText: "" },
   })
-
+  const [needRefresh, setNeedRefresh] = useState<boolean>(false)
   const [results, setResults] = useState<Results>({
     popular: [],
     recent: [],
@@ -34,7 +34,8 @@ export default function Search({ navigation }: RootTabScreenProps<"Search">) {
     const listTweets = tweets.filter((tweet) =>
       tweet.Tweets.toString().includes(searchText)
     )
-    setResults({
+
+    setResults(() => ({
       popular: listTweets.sort(
         (a, b) => b["Number of Likes"] - a["Number of Likes"]
       ),
@@ -43,8 +44,9 @@ export default function Search({ navigation }: RootTabScreenProps<"Search">) {
           new Date(b["Date Created"]).getTime() -
           new Date(a["Date Created"]).getTime()
       ),
-    })
+    }))
   }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.inputContainer}>
@@ -74,7 +76,10 @@ export default function Search({ navigation }: RootTabScreenProps<"Search">) {
             ...styles.tabElement,
             ...(type === "popular" && styles.tabSelected),
           }}
-          onPress={() => setType(() => "popular")}
+          onPress={() => {
+            setType(() => "popular")
+            setNeedRefresh(() => true)
+          }}
         >
           <Text style={{ ...styles.buttonInner, color: "white" }}>Popular</Text>
         </TouchableOpacity>
@@ -83,17 +88,26 @@ export default function Search({ navigation }: RootTabScreenProps<"Search">) {
             ...styles.tabElement,
             ...(type === "recent" && styles.tabSelected),
           }}
-          onPress={() => setType(() => "recent")}
+          onPress={() => {
+            setType(() => "recent")
+            setNeedRefresh(() => true)
+          }}
         >
           <Text style={{ ...styles.buttonInner, color: "white" }}>Recent</Text>
         </TouchableOpacity>
       </View>
       <View style={{ width: "100%" }}>
         <FlatList
-          data={type === "popular" ? results.popular : results.recent}
-          renderItem={({ item }) => <CardTweetSearch tweet={item} />}
+          data={results[type]}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity
+              onPress={() => navigation.push<any>("Modal", { tweetId: index })}
+            >
+              <CardTweetSearch tweet={item} />
+            </TouchableOpacity>
+          )}
           keyExtractor={(_, index) => index.toString()}
-          // extraData={selectedId}
+          extraData={needRefresh}
         />
       </View>
     </SafeAreaView>

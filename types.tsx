@@ -30,6 +30,7 @@ export type RootTabParamList = {
   Search: undefined
   Notifications: undefined
   Messages: undefined
+  Modal: undefined
 }
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

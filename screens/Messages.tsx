@@ -8,14 +8,11 @@ export default function Messages({
   navigation,
 }: RootTabScreenProps<"Messages">) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="/screens/Messages.tsx" />
+    <View style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Text style={{ fontSize: 30, fontWeight: "800" }}>You have no messages</Text>
+        <Text>Petit freluquet 😏</Text>
+      </View>
     </View>
   )
 }
