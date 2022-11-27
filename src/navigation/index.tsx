@@ -4,7 +4,6 @@
  *
  */
 import { Entypo } from "@expo/vector-icons"
-
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import {
   NavigationContainer,
@@ -13,24 +12,20 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import * as React from "react"
-import { ColorSchemeName, Image } from "react-native"
-
-import Colors from "../constants/Colors"
-import useColorScheme from "../hooks/useColorScheme"
-import ModalScreen from "../screens/ModalScreen"
-import NotFoundScreen from "../screens/NotFoundScreen"
-import Home from "../screens/Home"
-import avatar from '../assets/images/avatar.jpg'
-import LinkingConfiguration from "./LinkingConfiguration"
-import Search from "../screens/Search"
-import Notifications from "../screens/Notifications"
-import Messages from "../screens/Messages"
+import { ColorSchemeName, Pressable, useColorScheme } from "react-native"
+import ModalScreen from "../../screens/ModalScreen"
+import NotFoundScreen from "../../screens/NotFoundScreen"
+import Home from "../../screens/Home"
+import Search from "../../screens/Search"
+import Notifications from "../../screens/Notifications"
+import Messages from "../../screens/Messages"
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
-} from "../types"
-import { View } from "../components/Themed"
+} from "../../types"
+import LinkingConfiguration from "../../navigation/LinkingConfiguration"
+import Colors from "../../constants/Colors"
 
 export default function Navigation({
   colorScheme,
@@ -66,7 +61,7 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Group screenOptions={{ headerShown: false }}>
+      <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>
@@ -86,9 +81,8 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        headerShown: true,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarActiveTintColor: Colors[colorScheme as "light" | "dark"].tint,
       }}
     >
       <BottomTab.Screen
@@ -98,21 +92,28 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => (
             <Entypo name="home" size={24} color={color} />
           ),
-          headerTitle: () => (
-            <Entypo name="twitter" size={32} color="blue" />
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate("Modal")}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <Entypo
+                name="home"
+                size={24}
+                color={Colors[colorScheme as "light" | "dark"].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
           ),
-          headerLeft: () => (
-            <Image
-            style={{marginLeft: 16 ,width: 40, height: 40, marginRight: 20, borderRadius: 50 }}
-              source={require('../assets/images/avatar.jpg')}
-          />
-          )
         })}
       />
       <BottomTab.Screen
         name="Search"
         component={Search}
         options={{
+          title: "Tab Two",
           tabBarIcon: ({ color }) => (
             <Entypo name="magnifying-glass" size={24} color={color} />
           ),
@@ -122,7 +123,6 @@ function BottomTabNavigator() {
         name="Notifications"
         component={Notifications}
         options={{
-          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Entypo name="bell" size={24} color={color} />
           ),
@@ -132,6 +132,7 @@ function BottomTabNavigator() {
         name="Messages"
         component={Messages}
         options={{
+          title: "Tab Two",
           tabBarIcon: ({ color }) => (
             <Entypo name="mail" size={24} color={color} />
           ),
